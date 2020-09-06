@@ -68,6 +68,6 @@ class SuplierProductController extends Controller
 
     public function getAllProducts() {
         $products = Product::all();
-        return CustomeResponse::ResponseMsgOnly($products, 200);
+        return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
     }
 }

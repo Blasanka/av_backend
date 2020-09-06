@@ -2,7 +2,7 @@
 
 namespace App;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Illuminate\Database\Eloquent;
+use Eloquent;
 use Illuminate\Support\Facades\Hash;
 
 class Product extends Eloquent
