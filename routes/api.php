@@ -25,5 +25,9 @@ Route::get('get_profile_details', 'Dashboard\SupplierManagement@getSingleSupplie
 Route::post('update_supplier_details', 'Dashboard\SupplierManagement@updateSupplierDetails');
 Route::post('addNewProduct', 'Dashboard\ProductManagement@addNewProduct');
 
+// Products to Suplier Dashboard
 Route::post('supplier/products', 'Dashboard\supplier\SuplierProductController@addNewProduct');
 Route::get('supplier/products', 'Dashboard\supplier\SuplierProductController@getAllProducts');
+
+// Products to AV
+Route::get('products', 'av\AVProductController@getAllProducts');
