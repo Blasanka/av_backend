@@ -21,7 +21,7 @@ class AVProductController extends Controller
     }
 
     public function getAllProducts() {
-        $products = Product::take(4)->get();
+        $products = Product::latest()->take(4)->get();
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
     }
 }
