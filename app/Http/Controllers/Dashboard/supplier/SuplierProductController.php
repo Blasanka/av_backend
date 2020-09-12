@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Validator;
 use App\CustomClass\CustomeResponse;
 use App\Product;
 use Carbon\Carbon;
-
+use Illuminate\Http\UploadedFile;
 class SuplierProductController extends Controller
 {
 
@@ -40,24 +40,41 @@ class SuplierProductController extends Controller
         $product->color	 = $request->color;
         $product->price = $request->price;
         $product->aqty = $request->aqty;
-        $product->attachment = $request->attachment;
         $mytime = Carbon::now();
         $product->created_at = $mytime;
         $product->updated_at = $mytime;
         $product->status = 0;
+        $product->attachment = $request->attachment;
+
+        // if ($request->hasFile("attachment")) {
+        //     $destinationPath = "public/images/products";
+        //     $image = $request->file("attachment");
+        //     $imageName = $image->getClientOriginalName();
+        //     $path = $request->file("image")->storeAs($destinationPath, $imageName);
+        //     $product->attachment = $imageName;
+        // }
 
         if ($product->save()) {
-            // $productImgObj = new stdClass();
-            // foreach ($request->images as $key => $value) {
-            //     $productImgObj->$key['product_id'] =$product->id;
-            //     $productImgObj->$key['image_url'] = $value;
-            // }
-
-            // ProductImage::insert(json_decode(json_encode($productImgObj), TRUE));
             $this->code = 200;
             $this->message = 'Succeeded, we will review and make your product visible.';
         }
         return CustomeResponse::ResponseMsgOnly($this->message, $this->code);
+    }
+    
+    public function addNewProductImage(Request $request) {
+        $attachment = "";
+        if ($request->hasFile('attachment')) {
+            $destinationPath = "public/images/products";
+            $image = $request->file('attachment');
+            $imageName = $image->getClientOriginalName();
+            $path = $request->file('attachment')->storeAs($destinationPath, $imageName);
+            $attachment = $imageName;
+        }
+        // info($request->images);
+        $this->code = 200;
+        $this->message = asset("storage/images/products/$attachment");
+        return CustomeResponse::ResponseMsgOnly($this->message, $this->code);
+
     }
     
     public function updateNewProduct(Request $request) {

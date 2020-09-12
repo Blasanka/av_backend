@@ -25,8 +25,15 @@ Route::get('get_profile_details', 'Dashboard\SupplierManagement@getSingleSupplie
 Route::post('update_supplier_details', 'Dashboard\SupplierManagement@updateSupplierDetails');
 Route::post('addNewProduct', 'Dashboard\ProductManagement@addNewProduct');
 
+
+// Admin: temporary
+Route::post('admin/login', 'Auth\AdminAuthController@login');
+Route::get('admin/products', 'Dashboard\admin\ProductController@getAllProducts');
+Route::put('admin/products', 'Dashboard\admin\ProductController@changeStatus');
+
 // Products to Suplier Dashboard
 Route::post('supplier/products', 'Dashboard\supplier\SuplierProductController@addNewProduct');
+Route::post('supplier/products/image', 'Dashboard\supplier\SuplierProductController@addNewProductImage');
 Route::get('supplier/products', 'Dashboard\supplier\SuplierProductController@getAllProducts');
 
 // Products to AV
