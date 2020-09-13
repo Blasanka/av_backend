@@ -20,8 +20,13 @@ class AVProductController extends Controller
     public function getProduct(Request $request) {
     }
 
-    public function getAllProducts() {
+    public function getFeaturedProducts() {
         $products = Product::latest()->take(4)->get();
+        return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
+    }
+
+    public function getAllProducts() {
+        $products = Product::where('status', 1)->get();
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
     }
 }

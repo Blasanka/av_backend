@@ -37,4 +37,5 @@ Route::post('supplier/products/image', 'Dashboard\supplier\SuplierProductControl
 Route::get('supplier/products', 'Dashboard\supplier\SuplierProductController@getAllProducts');
 
 // Products to AV
+Route::get('products/latest', 'av\AVProductController@getFeaturedProducts');
 Route::get('products', 'av\AVProductController@getAllProducts');
