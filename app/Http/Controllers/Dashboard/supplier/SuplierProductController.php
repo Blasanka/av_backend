@@ -9,6 +9,7 @@ use App\CustomClass\CustomeResponse;
 use App\Product;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 class SuplierProductController extends Controller
 {
 
@@ -63,17 +64,31 @@ class SuplierProductController extends Controller
     
     public function addNewProductImage(Request $request) {
         $attachment = "";
-        if ($request->hasFile('attachment')) {
-            $destinationPath = "public/images/products";
-            $image = $request->file('attachment');
-            $imageName = $image->getClientOriginalName();
-            $path = $request->file('attachment')->storeAs($destinationPath, $imageName);
-            $attachment = $imageName;
+        $image = $request->allFiles();
+        
+        Log::info("begore for loop". count($image));
+        $destinationPath = "public/images/products";
+        foreach ($image as $key => $value) {
+            foreach ($value as $file) {
+                if ($request->hasFile('attachment')) {
+                    $imageName = $file->getClientOriginalName();
+                    $path = $file->storeAs($destinationPath, $imageName);
+                    if (count($value) > 1) {
+                        $attachment .= asset("storage/images/products/").'/'.$imageName.'|';
+                    } else {
+                        $attachment = asset("storage/images/products/").'/'.$imageName;
+                    }
+                    Log::info("Inside for loop". $imageName);
+                }
+            }
         }
+        Log::info("Outside for loop");
+        Log::info("Outside if condition". $attachment);
         // info($request->images);
         $this->code = 200;
-        $this->message = asset("storage/images/products/$attachment");
-        return CustomeResponse::ResponseMsgOnly($this->message, $this->code);
+        $this->message = "Successfully images stored";
+        $this->data = $attachment;
+        return CustomeResponse::ResponseMsgWithData($this->message, $this->code, $this->data);
 
     }
     
@@ -85,6 +100,11 @@ class SuplierProductController extends Controller
 
     public function getAllProducts() {
         $products = Product::all();
+        foreach ($products as $key => $value) {
+            $attachment = explode('|', $value->attachment);
+            $value->attachment = $attachment;
+            $products[$key] = $value;
+        }
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
     }
 }
