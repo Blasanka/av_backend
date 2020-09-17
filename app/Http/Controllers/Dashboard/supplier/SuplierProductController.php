@@ -66,7 +66,6 @@ class SuplierProductController extends Controller
         $attachment = "";
         $image = $request->allFiles();
         
-        Log::info("begore for loop". count($image));
         $destinationPath = "public/images/products";
         foreach ($image as $key => $value) {
             foreach ($value as $file) {
@@ -78,12 +77,9 @@ class SuplierProductController extends Controller
                     } else {
                         $attachment = asset("storage/images/products/").'/'.$imageName;
                     }
-                    Log::info("Inside for loop". $imageName);
                 }
             }
         }
-        Log::info("Outside for loop");
-        Log::info("Outside if condition". $attachment);
         // info($request->images);
         $this->code = 200;
         $this->message = "Successfully images stored";

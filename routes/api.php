@@ -39,3 +39,4 @@ Route::get('supplier/products', 'Dashboard\supplier\SuplierProductController@get
 // Products to AV
 Route::get('products/latest', 'av\AVProductController@getFeaturedProducts');
 Route::get('products', 'av\AVProductController@getAllProducts');
+Route::get('products/{id}', 'av\AVProductController@getProduct');

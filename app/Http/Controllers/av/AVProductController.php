@@ -17,9 +17,6 @@ class AVProductController extends Controller
         $this->message = 'Internal Server Error';
     }
 
-    public function getProduct(Request $request) {
-    }
-
     public function getFeaturedProducts() {
         $products = Product::latest()->take(4)->get();
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
@@ -27,6 +24,21 @@ class AVProductController extends Controller
 
     public function getAllProducts() {
         $products = Product::where('status', 1)->get();
+        foreach ($products as $key => $value) {
+            $attachment = explode('|', $value->attachment);
+            $value->attachment = $attachment;
+            $products[$key] = $value;
+        }
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
+    }
+
+    public function getProduct(Request $request) {
+        $product = Product::find(request()->route('id'));
+        if (is_null($product)) {
+            return CustomeResponse::ResponseMsgOnly("Resource not found!", 404);
+        }
+        $attachment = explode('|', $product->attachment);
+        $product->attachment = $attachment;
+        return CustomeResponse::ResponseMsgWithData("Successful", 200, $product);
     }
 }
