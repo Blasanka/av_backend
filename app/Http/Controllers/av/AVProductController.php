@@ -9,8 +9,7 @@ use App\CustomClass\CustomeResponse;
 use App\Product;
 use Carbon\Carbon;
 
-class AVProductController extends Controller
-{
+class AVProductController extends Controller {
 
     public function __construct() {
         $this->code = 500;
@@ -19,6 +18,11 @@ class AVProductController extends Controller
 
     public function getFeaturedProducts() {
         $products = Product::latest()->take(4)->get();
+        foreach ($products as $key => $value) {
+            $attachment = explode('|', $value->attachment);
+            $value->attachment = $attachment;
+            $products[$key] = $value;
+        }
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
     }
 
