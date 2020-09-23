@@ -103,4 +103,13 @@ class SuplierProductController extends Controller
         }
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
     }
+
+    public function deleteProduct(Request $request) {
+        if (!empty($request->id)) {
+            $data = Product::where('id', $request->id)->delete();
+            return CustomeResponse::ResponseMsgOnly("Successful", 200);
+        } else {
+            return CustomeResponse::ResponseMsgOnly("Bad Request", 403);
+        }
+    }
 }

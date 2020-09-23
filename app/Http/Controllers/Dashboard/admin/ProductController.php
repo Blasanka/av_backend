@@ -21,7 +21,7 @@ class ProductController extends Controller {
     public function changeStatus(Request $request) {
         if (!empty($request->id)) {
             $data = Product::find($request->id);
-            $data->status = 1;
+            $data->status = $request->status;
             $data->save();
             return CustomeResponse::ResponseMsgOnly("Successful", 200);
         } else {
