@@ -36,6 +36,7 @@ Route::post('supplier/products', 'Dashboard\supplier\SuplierProductController@ad
 Route::post('supplier/products/image', 'Dashboard\supplier\SuplierProductController@addNewProductImage');
 Route::get('supplier/products', 'Dashboard\supplier\SuplierProductController@getAllProducts');
 Route::delete('supplier/products/{id}', 'Dashboard\supplier\SuplierProductController@deleteProduct');
+Route::put('supplier/products/{id}', 'Dashboard\supplier\SuplierProductController@updateProduct');
 
 // Products to AV
 Route::get('products/latest', 'av\AVProductController@getFeaturedProducts');

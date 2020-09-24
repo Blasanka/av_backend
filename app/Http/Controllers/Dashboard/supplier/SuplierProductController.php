@@ -88,10 +88,52 @@ class SuplierProductController extends Controller
 
     }
     
-    public function updateNewProduct(Request $request) {
+    public function updateProduct(Request $request) {
+        $validator = Validator::make($request->json()->all(), [
+            'product_name' => 'required',
+            'description' => 'required',
+            'specifications' => 'required',
+            'price' => 'required',
+            'aqty' => 'required',
+            'color' => 'required',
+            'attachment' => 'required',
+        ]);
+
+
+        if ($validator->fails()) {
+            return CustomeResponse::ResponseRequestValidationFailed();
+        }
+
+        $product = new Product();
+        $product->product_name = $request->product_name;
+        $product->description = $request->description;
+        $product->specifications = $request->specifications;
+        $product->color	 = $request->color;
+        $product->price = $request->price;
+        $product->aqty = $request->aqty;
+        $mytime = Carbon::now();
+        $product->updated_at = $mytime;
+        $product->status = $request->status;
+        $product->attachment = $request->attachment;
+
+        if ($product::where('id', $product->id)->update()) {
+            $this->code = 200;
+            $this->message = 'Succeefully updated!, we will review and make your product visible.';
+        }
+        return CustomeResponse::ResponseMsgOnly($this->message, $this->code);
     }
 
     public function getProduct(Request $request) {
+        if (!empty($request->id)) {
+            $product = Product::find($request->id);
+            if (!is_null($product)) {
+                return CustomeResponse::ResponseMsgWithData("Successful", 200, $product);
+            } else {
+                return CustomeResponse::ResponseMsgOnly("Not found", 404);
+            }
+        } else {
+            return CustomeResponse::ResponseMsgOnly("Bad Request", 403);
+        }
     }
 
     public function getAllProducts() {
