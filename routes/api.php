@@ -31,6 +31,10 @@ Route::post('admin/login', 'Auth\AdminAuthController@login');
 Route::get('admin/products', 'Dashboard\admin\ProductController@getAllProducts');
 Route::put('admin/products', 'Dashboard\admin\ProductController@changeStatus');
 
+Route::get('admin/suppliers', 'Dashboard\admin\ManageSupplierController@getAllSuppliers');
+Route::put('admin/suppliers', 'Dashboard\admin\ManageSupplierController@changeStatus');
+Route::get('admin/suppliers/{id}', 'Dashboard\admin\ManageSupplierController@getSupplier');
+
 // Products to Suplier Dashboard
 Route::post('supplier/products', 'Dashboard\supplier\SuplierProductController@addNewProduct');
 Route::post('supplier/products/image', 'Dashboard\supplier\SuplierProductController@addNewProductImage');
