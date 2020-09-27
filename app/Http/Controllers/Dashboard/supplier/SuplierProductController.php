@@ -68,14 +68,17 @@ class SuplierProductController extends Controller
         
         $destinationPath = "public/images/products";
         foreach ($image as $key => $value) {
-            foreach ($value as $file) {
+            foreach ($value as $i => $file) {
                 if ($request->hasFile('attachment')) {
                     $imageName = $file->getClientOriginalName();
                     $path = $file->storeAs($destinationPath, $imageName);
                     if (count($value) > 1) {
-                        $attachment .= asset("storage/images/products/").'/'.$imageName.'|';
+                        if ($i == count($value)-1) {
+                            $attachment .= 'images/products/'.$imageName;
+                        } else
+                            $attachment .= 'images/products/'.$imageName.'|';
                     } else {
-                        $attachment = asset("storage/images/products/").'/'.$imageName;
+                        $attachment = 'images/products/'.$imageName;
                     }
                 }
             }
@@ -96,7 +99,7 @@ class SuplierProductController extends Controller
             'price' => 'required',
             'aqty' => 'required',
             'color' => 'required',
-            'attachment' => 'required',
+            // 'attachment' => 'required',
         ]);
 
 
@@ -111,12 +114,9 @@ class SuplierProductController extends Controller
         $product->color	 = $request->color;
         $product->price = $request->price;
         $product->aqty = $request->aqty;
-        $mytime = Carbon::now();
-        $product->updated_at = $mytime;
-        $product->status = $request->status;
-        $product->attachment = $request->attachment;
+        $product->attachment = rtrim($request->attachment, '|');
 
-        if ($product::where('id', $product->id)->update()) {
+        if ($product::where('id', $request->id)->update($product->toArray())) {
             $this->code = 200;
             $this->message = 'Succeefully updated!, we will review and make your product visible.';
         }
@@ -127,6 +127,8 @@ class SuplierProductController extends Controller
         if (!empty($request->id)) {
             $product = Product::find($request->id);
             if (!is_null($product)) {
+                $attachment = explode('|', $product->attachment);
+                $product->attachment = $attachment;
                 return CustomeResponse::ResponseMsgWithData("Successful", 200, $product);
             } else {
                 return CustomeResponse::ResponseMsgOnly("Not found", 404);

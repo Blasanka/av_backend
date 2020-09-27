@@ -35,6 +35,7 @@ Route::put('admin/products', 'Dashboard\admin\ProductController@changeStatus');
 Route::post('supplier/products', 'Dashboard\supplier\SuplierProductController@addNewProduct');
 Route::post('supplier/products/image', 'Dashboard\supplier\SuplierProductController@addNewProductImage');
 Route::get('supplier/products', 'Dashboard\supplier\SuplierProductController@getAllProducts');
+Route::get('supplier/products/{id}', 'Dashboard\supplier\SuplierProductController@getProduct');
 Route::delete('supplier/products/{id}', 'Dashboard\supplier\SuplierProductController@deleteProduct');
 Route::put('supplier/products/{id}', 'Dashboard\supplier\SuplierProductController@updateProduct');
 
