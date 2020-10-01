@@ -20,8 +20,10 @@ class CreateProductTable extends Migration
             $table->text('specifications');
             $table->string('color')->nullable();
             $table->double('price');
+            $table->double('sale_price');
             $table->integer('aqty');
             $table->text('attachment')->nullable();
+            $table->tinyInteger('visibility');
             $table->tinyInteger('status');
             $table->timestamps();
         });

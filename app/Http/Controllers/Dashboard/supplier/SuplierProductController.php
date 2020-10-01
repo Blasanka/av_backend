@@ -24,6 +24,7 @@ class SuplierProductController extends Controller
             'description' => 'required',
             'specifications' => 'required',
             'price' => 'required',
+            'sale_price' => 'required',
             'aqty' => 'required',
             'color' => 'required',
             'attachment' => 'required',
@@ -40,11 +41,13 @@ class SuplierProductController extends Controller
         $product->specifications = $request->specifications;
         $product->color	 = $request->color;
         $product->price = $request->price;
+        $product->sale_price = $request->sale_price;
         $product->aqty = $request->aqty;
         $mytime = Carbon::now();
         $product->created_at = $mytime;
         $product->updated_at = $mytime;
         $product->status = 0;
+        $product->visibility = 0;
         $product->attachment = $request->attachment;
 
         // if ($request->hasFile("attachment")) {
@@ -97,6 +100,7 @@ class SuplierProductController extends Controller
             'description' => 'required',
             'specifications' => 'required',
             'price' => 'required',
+            'sale_price' => 'required',
             'aqty' => 'required',
             'color' => 'required',
             // 'attachment' => 'required',
@@ -113,6 +117,7 @@ class SuplierProductController extends Controller
         $product->specifications = $request->specifications;
         $product->color	 = $request->color;
         $product->price = $request->price;
+        $product->sale_price = $request->sale_price;
         $product->aqty = $request->aqty;
         $product->attachment = rtrim($request->attachment, '|');
 

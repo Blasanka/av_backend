@@ -45,8 +45,10 @@ class ProductManagement extends Controller
         $product->specifications = $request->specifications;
         $product->color	 = $request->color;
         $product->price = $request->price;
+        $product->sale_price = $request->sale_price;
         $product->aqty = $request->aqty;
         $product->status = 0;
+        $product->visibility = 0;
 
         if ($product->save()) {
             $productImgObj = new stdClass();

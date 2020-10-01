@@ -16,7 +16,7 @@ class Product extends Eloquent
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'product_name','description','specifications','color','price', 'aqty', 'attachment','status','created_at','updated_at'
+        'id', 'product_name','description','specifications','color','price', 'sale_price', 'aqty', 'attachment', 'visibility', 'status', 'created_at', 'updated_at'
     ];
 
     public static function Create_supplier($Supplier){
