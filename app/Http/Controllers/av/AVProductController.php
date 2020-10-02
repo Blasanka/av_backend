@@ -17,7 +17,8 @@ class AVProductController extends Controller {
     }
 
     public function getFeaturedProducts() {
-        $products = Product::latest()->take(4)->get();
+        $products = Product::where('status', 1)->orderBy('created_at', 'desc')
+            ->take(4)->get();
         foreach ($products as $key => $value) {
             $attachment = explode('|', $value->attachment);
             $value->attachment = $attachment;

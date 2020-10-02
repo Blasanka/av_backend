@@ -19,9 +19,6 @@ class ProductManagement extends Controller
         $this->message = 'System Error..!';
     }
 
-
-
-
     public function addNewProduct(Request $request)
     {
         $validator = Validator::make($request->json()->all(), [
@@ -65,7 +62,7 @@ class ProductManagement extends Controller
         return CustomeResponse::ResponseMsgOnly($this->message, $this->code);
     }
     
-    public function updateNewProduct(Request $request)
+    public function updateProduct(Request $request)
     {
     }
 
