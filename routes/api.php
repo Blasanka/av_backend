@@ -47,3 +47,19 @@ Route::put('supplier/products/{id}', 'Dashboard\supplier\SuplierProductControlle
 Route::get('products/latest', 'av\AVProductController@getFeaturedProducts');
 Route::get('products', 'av\AVProductController@getAllProducts');
 Route::get('products/{id}', 'av\AVProductController@getProduct');
+
+// Categories to Dashboard
+Route::post('categories', 'Dashboard\CategoryController@addCategory');
+Route::put('categories/{id}', 'Dashboard\CategoryController@updateCategory');
+Route::delete('categories/{id}', 'Dashboard\CategoryController@deleteCategory');
+
+Route::post('sub-categories', 'Dashboard\CategoryController@addSubCategory');
+Route::put('sub-categories/{id}', 'Dashboard\CategoryController@updateSubCategory');
+Route::delete('sub-categories/{id}', 'Dashboard\CategoryController@deleteSubCategory');
+
+// Categories to AV
+Route::get('categories', 'av\AVCategoryController@getAllCategory');
+Route::get('categories/{id}', 'av\AVCategoryController@getCategory');
+
+Route::get('sub-categories', 'av\AVCategoryController@getAllSubCategory');
+Route::get('sub-categories/{id}', 'av\AVSubCategoryController@getSubCategory');
