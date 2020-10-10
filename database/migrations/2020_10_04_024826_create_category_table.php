@@ -15,13 +15,13 @@ class CreateCategoryTable extends Migration
     {
         Schema::create('category', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 150);
+            $table->string('category_name', 150)->unique();
             $table->timestamps();
         });
 
         Schema::create('sub_category', function (Blueprint $table) {
             $table->id();
-            $table->string('name', 150);
+            $table->string('name', 150)->unique();
             $table->foreignId('category_id')->references('id')->on('category')->onDelete('cascade');;
             $table->timestamps();
         });

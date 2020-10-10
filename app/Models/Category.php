@@ -12,10 +12,10 @@ class Category extends Eloquent
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'name', 'created_at', 'updated_at'
+        'id', 'category_name', 'created_at', 'updated_at'
     ];
 
     public function subCategories() {
-        return $this->morphMany('App\Models\SubCategory', 'subCategories');
+        return $this->hasMany('App\Models\SubCategory');
     }
 }

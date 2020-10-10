@@ -1,22 +1,32 @@
 <?php
 
-namespace App;
+namespace App\Models;
 use Tymon\JWTAuth\Contracts\JWTSubject;
-use Eloquent;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\SupplierAuth as Authenticatable;
 use Illuminate\Support\Facades\Hash;
 
-class Product extends Eloquent
+class Customer extends Authenticatable implements JWTSubject
 {
     /**
      * The attributes that are mass assignable.
      *
      * @var array
      */
-    protected $table = 'product';
+    protected $table = 'customer';
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'product_name','description','specifications','color','price', 'sale_price', 'aqty', 'attachment', 'visibility', 'status', 'category_id', 'sub_category_id', 'created_at', 'updated_at'
+        'id', 'username', 'password', 'address', 'mobile', 'status', 'approved_by', 'approved_at'
+    ];
+
+     /**
+     * The attributes that should be hidden for arrays.
+     *
+     * @var array
+     */
+    protected $hidden = [
+        'password','remember_token'
     ];
 
     public static function Create_supplier($Supplier){

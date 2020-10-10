@@ -6,7 +6,7 @@ use Eloquent;
 
 class SubCategory extends Eloquent
 {
-    protected $table = 'category';
+    protected $table = 'sub_category';
     protected $primaryKey = 'id';
     protected $foreignKey = 'category_id';
 
@@ -14,7 +14,7 @@ class SubCategory extends Eloquent
         'id', 'name', 'category_id', 'created_at', 'updated_at'
     ];
     
-    public function subCategories() {
-        return $this->morphTo();
+    public function categories() {
+        return $this->belongsTo('App\Models\Category', 'id');
     }
 }

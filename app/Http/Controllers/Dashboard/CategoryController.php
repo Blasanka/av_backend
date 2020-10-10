@@ -6,12 +6,17 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\CustomClass\CustomeResponse;
-use App\Category;
-use App\SubCategory;
+use App\Models\Category;
+use App\Models\SubCategory;
 
 class CategoryController extends Controller
 {
-    
+    public function __construct()
+    {
+        $this->code = 500;
+        $this->message = 'Internal Server error!';
+    }
+
     // Manage Category
     public function addCategory(Request $request) {
         $validator = Validator::make($request->json()->all(), [
@@ -24,7 +29,7 @@ class CategoryController extends Controller
         }
 
         $category = new Category();
-        $category->name = $request->name;
+        $category->category_name = $request->name;
 
         if ($category->save()) {
             $this->code = 200;
@@ -38,13 +43,12 @@ class CategoryController extends Controller
             'name' => 'required',
         ]);
 
-
         if ($validator->fails()) {
             return CustomeResponse::ResponseRequestValidationFailed();
         }
 
         $category = new Category();
-        $category->name = $request->name;
+        $category->category_name = $request->name;
 
         if ($category::where('id', request()->route('id'))->update($category->toArray())) {
             $this->code = 200;

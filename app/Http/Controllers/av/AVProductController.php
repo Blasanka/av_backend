@@ -46,4 +46,62 @@ class AVProductController extends Controller {
         $product->attachment = $attachment;
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $product);
     }
+
+    // Related products for detailed products and inquery view product
+    public function getRelatedProducts(Request $request) {
+        $subCategoryId = $request->get('id');
+        $products = Product::where('status', 1)
+            ->where('id', $subCategoryId)
+            ->orderBy('created_at', 'desc')
+            ->take(4)->get();
+        
+            foreach ($products as $key => $value) {
+            $attachment = explode('|', $value->attachment);
+            $value->attachment = $attachment;
+            $products[$key] = $value;
+        }
+        return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
+    }
+
+    // You May Like products for detailed products and inquery view product
+    public function getYouMayLikeProducts(Request $request) {
+        $categoryId = $request->get('id');
+        $products = Product::where('status', 1)
+            ->where('id', $categoryId)
+            ->orderBy('created_at', 'desc')
+            ->take(4)->get();
+        
+            foreach ($products as $key => $value) {
+            $attachment = explode('|', $value->attachment);
+            $value->attachment = $attachment;
+            $products[$key] = $value;
+        }
+        return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
+    }
+
+    public function searchProducts(Request $request) {
+        $searchQueryName = $request->get('name');
+        $searchQueryCatId = $request->get('category_id');
+
+        $products = array();
+        
+        if ($searchQueryCatId == '0') {
+            $products = Product::where('status', 1)
+                ->where('product_name', 'like', "%{$searchQueryName}%")
+                ->get();
+        } else {
+            $products = Product::where('status', 1)
+                ->where('product_name', 'like', "%{$searchQueryName}%")
+                ->where('category_id', '=', $searchQueryCatId)
+                ->get();
+        }
+        
+        foreach ($products as $key => $value) {
+            $attachment = explode('|', $value->attachment);
+            $value->attachment = $attachment;
+            $products[$key] = $value;
+        }
+        return CustomeResponse::ResponseMsgWithData("Successful", 200, $products);
+    }
+
 }

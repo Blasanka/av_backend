@@ -48,6 +48,8 @@ class SuplierProductController extends Controller
         $product->updated_at = $mytime;
         $product->status = 0;
         $product->visibility = 0;
+        $product->category_id = $request->category_id;
+        $product->sub_category_id = $request->sub_category_id;
         $product->attachment = $request->attachment;
 
         // if ($request->hasFile("attachment")) {
@@ -103,6 +105,8 @@ class SuplierProductController extends Controller
             'sale_price' => 'required',
             'aqty' => 'required',
             'color' => 'required',
+            'category_id' => 'required',
+            'sub_category_id' => 'required',
             // 'attachment' => 'required',
         ]);
 
@@ -119,6 +123,8 @@ class SuplierProductController extends Controller
         $product->price = $request->price;
         $product->sale_price = $request->sale_price;
         $product->aqty = $request->aqty;
+        $product->category_id = $request->category_id;
+        $product->sub_category_id = $request->sub_category_id;
         $product->attachment = rtrim($request->attachment, '|');
 
         if ($product::where('id', $request->id)->update($product->toArray())) {

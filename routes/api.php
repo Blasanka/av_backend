@@ -18,7 +18,6 @@ use Illuminate\Support\Facades\Route;
 //     return $request->user();
 // });
 
-
 Route::post('supplier_login', 'Auth\SupplierAuthController@login');
 Route::post('supplier_registration', 'Dashboard\SupplierManagement@storeSupplierDetails');
 Route::get('get_profile_details', 'Dashboard\SupplierManagement@getSingleSupplierDetails');
@@ -43,11 +42,6 @@ Route::get('supplier/products/{id}', 'Dashboard\supplier\SuplierProductControlle
 Route::delete('supplier/products/{id}', 'Dashboard\supplier\SuplierProductController@deleteProduct');
 Route::put('supplier/products/{id}', 'Dashboard\supplier\SuplierProductController@updateProduct');
 
-// Products to AV
-Route::get('products/latest', 'av\AVProductController@getFeaturedProducts');
-Route::get('products', 'av\AVProductController@getAllProducts');
-Route::get('products/{id}', 'av\AVProductController@getProduct');
-
 // Categories to Dashboard
 Route::post('categories', 'Dashboard\CategoryController@addCategory');
 Route::put('categories/{id}', 'Dashboard\CategoryController@updateCategory');
@@ -57,9 +51,21 @@ Route::post('sub-categories', 'Dashboard\CategoryController@addSubCategory');
 Route::put('sub-categories/{id}', 'Dashboard\CategoryController@updateSubCategory');
 Route::delete('sub-categories/{id}', 'Dashboard\CategoryController@deleteSubCategory');
 
+// Products to AV
+Route::get('products/latest', 'av\AVProductController@getFeaturedProducts');
+Route::get('products', 'av\AVProductController@getAllProducts');
+Route::get('products/{id}', 'av\AVProductController@getProduct');
+
 // Categories to AV
-Route::get('categories', 'av\AVCategoryController@getAllCategory');
+Route::get('categories', 'av\AVCategoryController@getAllCategories');
 Route::get('categories/{id}', 'av\AVCategoryController@getCategory');
 
-Route::get('sub-categories', 'av\AVCategoryController@getAllSubCategory');
-Route::get('sub-categories/{id}', 'av\AVSubCategoryController@getSubCategory');
+Route::get('sub-categories', 'av\AVCategoryController@getAllSubCategories');
+Route::get('sub-categories/{id}', 'av\AVCategoryController@getSubCategory');
+
+// Search to AV
+Route::post('search/products', 'av\AVProductController@searchProducts');
+
+// Auth for AV
+Route::post('login', 'Auth\AVAuthController@login');
+Route::post('register', 'Auth\AVCustomerController@register');
