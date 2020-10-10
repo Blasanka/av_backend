@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\CustomClass\CustomeResponse;
 use App\Product;
+use App\Models\Category;
+use App\Models\SubCategory;
 use Carbon\Carbon;
 
 class AVProductController extends Controller {
@@ -44,18 +46,31 @@ class AVProductController extends Controller {
         }
         $attachment = explode('|', $product->attachment);
         $product->attachment = $attachment;
+
+        $category = Category::find($product->category_id);
+        if (!empty($category)) {
+            $product->category_name = $category->category_name;
+        }
+
+        $subCategory = SubCategory::find($product->sub_category_id);
+        if (!empty($subCategory)) {
+            $product->sub_category_name = $subCategory->name;
+        }
+
         return CustomeResponse::ResponseMsgWithData("Successful", 200, $product);
     }
 
     // Related products for detailed products and inquery view product
     public function getRelatedProducts(Request $request) {
-        $subCategoryId = $request->get('id');
+        $subCategoryId = request()->route('subCategoryId');
+        $productId = $request->query('productId');
         $products = Product::where('status', 1)
-            ->where('id', $subCategoryId)
+            ->where('id', '!=', $productId)
+            ->where('sub_category_id', $subCategoryId)
             ->orderBy('created_at', 'desc')
             ->take(4)->get();
         
-            foreach ($products as $key => $value) {
+        foreach ($products as $key => $value) {
             $attachment = explode('|', $value->attachment);
             $value->attachment = $attachment;
             $products[$key] = $value;
@@ -65,13 +80,15 @@ class AVProductController extends Controller {
 
     // You May Like products for detailed products and inquery view product
     public function getYouMayLikeProducts(Request $request) {
-        $categoryId = $request->get('id');
+        $categoryId = request()->route('categoryId');
+        $productId = $request->query('productId');
         $products = Product::where('status', 1)
-            ->where('id', $categoryId)
+            ->where('id', '!=', $productId)
+            ->where('category_id', $categoryId)
             ->orderBy('created_at', 'desc')
             ->take(4)->get();
         
-            foreach ($products as $key => $value) {
+        foreach ($products as $key => $value) {
             $attachment = explode('|', $value->attachment);
             $value->attachment = $attachment;
             $products[$key] = $value;

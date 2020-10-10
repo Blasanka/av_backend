@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\CustomClass\CustomeResponse;
 use App\Product;
+use App\Models\Category;
+use App\Models\SubCategory;
 use Carbon\Carbon;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Log;
@@ -140,6 +142,13 @@ class SuplierProductController extends Controller
             if (!is_null($product)) {
                 $attachment = explode('|', $product->attachment);
                 $product->attachment = $attachment;
+                
+                // $category = Category::find($product->category_id);
+                // $product->category_name = $category->category_name;
+
+                // $subCategory = SubCategory::find($product->sub_category_id);
+                // $product->sub_category_name = $subCategory->name;
+                
                 return CustomeResponse::ResponseMsgWithData("Successful", 200, $product);
             } else {
                 return CustomeResponse::ResponseMsgOnly("Not found", 404);

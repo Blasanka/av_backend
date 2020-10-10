@@ -55,6 +55,8 @@ Route::delete('sub-categories/{id}', 'Dashboard\CategoryController@deleteSubCate
 Route::get('products/latest', 'av\AVProductController@getFeaturedProducts');
 Route::get('products', 'av\AVProductController@getAllProducts');
 Route::get('products/{id}', 'av\AVProductController@getProduct');
+Route::get('products/related/{subCategoryId}', 'av\AVProductController@getRelatedProducts');
+Route::get('products/may-like/{categoryId}', 'av\AVProductController@getYouMayLikeProducts');
 
 // Categories to AV
 Route::get('categories', 'av\AVCategoryController@getAllCategories');
