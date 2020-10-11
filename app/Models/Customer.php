@@ -17,7 +17,7 @@ class Customer extends Authenticatable implements JWTSubject
     protected $primaryKey = 'id';
 
     protected $fillable = [
-        'id', 'username', 'password', 'address', 'mobile', 'status', 'approved_by', 'approved_at'
+        'id', 'username', 'password', 'email', 'mobile', 'verify_code', 'full_name', 'dob', 'gender', "created_at", "updated_at"
     ];
 
      /**
@@ -33,10 +33,9 @@ class Customer extends Authenticatable implements JWTSubject
         return self::insert($Supplier);
     }
 
-    public static function checkApproveStaus($email){
-        $result = self::select('email')
-                    ->where('email',$email)
-                    ->where('status', 1 )
+    public static function checkApproveStaus($mobile){
+        $result = self::select('mobile')
+                    ->where('mobile', $mobile)
                     ->first();
 
         if($result != null){
@@ -47,9 +46,9 @@ class Customer extends Authenticatable implements JWTSubject
             
     }
 
-    public static function getUsername($email){
+    public static function getUsername($mobile){
         $result = self::select('username')
-                    ->where('email',$email)
+                    ->where('mobile',$mobile)
                     ->first();
 
         if($result != null){
@@ -61,9 +60,8 @@ class Customer extends Authenticatable implements JWTSubject
     }
 
     public static function get_single_supplier($id){
-        $result = self::select('username','email','shopname','bis_info','mobile','legal_name','address','personalic','br_num','nic_copy')
+        $result = self::select('id', 'username', 'address', 'mobile', 'full_name', 'dob', 'gender', 'nic', "created_at", "updated_at")
                     ->where('id',$id)
-                    ->where('status', 1 )
                     ->first();
 
         if($result != null){
@@ -95,11 +93,13 @@ class Customer extends Authenticatable implements JWTSubject
         return [];
     }
 
-    public function setPasswordAttribute($password)
-{
-    if ( !empty($password) ) {
-        $this->attributes['password'] = Hash::make($password);
+    public function setPasswordAttribute($password) {
+        if ( !empty($password) ) {
+            $this->attributes['password'] = Hash::make($password);
+        }
     }
-}
 
+    public function codeOwner() {
+        return $this->belongsTo('App\Models\Customer', 'mobile');
+    }
 }

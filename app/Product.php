@@ -14,8 +14,6 @@ class Product extends Eloquent
      */
     protected $table = 'product';
     protected $primaryKey = 'id';
-    // protected $category_name = '';
-    // protected $sub_category_name = '';
 
     protected $fillable = [
         'id', 'product_name','description','specifications','color','price', 'sale_price', 'aqty', 'attachment', 'visibility', 'status', 'category_id', 'sub_category_id', 'created_at', 'updated_at'

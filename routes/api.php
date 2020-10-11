@@ -70,4 +70,5 @@ Route::post('search/products', 'av\AVProductController@searchProducts');
 
 // Auth for AV
 Route::post('login', 'Auth\AVAuthController@login');
-Route::post('register', 'Auth\AVCustomerController@register');
+Route::post('register', 'Auth\AVAuthController@register');
+Route::post('request-code', 'av\AvCustomerController@generateVerificationCode');

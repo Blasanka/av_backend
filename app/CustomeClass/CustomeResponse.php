@@ -17,8 +17,8 @@ class CustomeResponse
     public static function  ResponseRequestValidationFailed()
     {
         return response()->json([
-            'code' => 401,
-            'message' => 'Invalid Request',
+            'code' => 400,
+            'message' => 'Bad Request',
         ], 401);
     }
 
